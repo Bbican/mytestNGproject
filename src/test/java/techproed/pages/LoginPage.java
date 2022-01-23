@@ -3,10 +3,13 @@ package techproed.pages;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.w3c.dom.html.HTMLInputElement;
 import techproed.utilities.ConfigurationReader;
 import techproed.utilities.Driver;
 
 public class LoginPage {
+
+
     // Find the page object in this class
     // creating the constructor to initialize the page element
     //  PageFactory.initElements in used to initialize this page objectes
@@ -19,8 +22,8 @@ public class LoginPage {
     @FindBy(id="account-menu")
     public WebElement loginDropdown;
 
-    @FindBy(xpath = "(//*[text()='Sign in'])[1]")
-    public WebElement singInButton;
+    @FindBy(id = "login-item")
+    public WebElement signInButton;
 
     @FindBy(id="username")
     public WebElement username;
@@ -31,11 +34,14 @@ public class LoginPage {
     @FindBy(xpath = "//button[@type='submit']")
     public WebElement loginButton;
 
+    @FindBy(xpath = "//span[.='Sign out']")
+    public WebElement signOut;
+
     //    Creating a reusable login method
 //    I will call this in the test classes to login
     public void loginApplication(String userName, String pass){
         loginDropdown.click();
-        singInButton.click();
+        signInButton.click();
         username.sendKeys(userName);
         password.sendKeys(pass);
         loginButton.click();
