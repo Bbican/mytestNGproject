@@ -4,6 +4,7 @@ import jdk.nashorn.internal.runtime.regexp.joni.Config;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import techproed.pages.CreateCustomerPage;
 import techproed.pages.EmployeeDefaultPage;
@@ -15,14 +16,18 @@ import techproed.utilities.ReusableMethods;
 import java.io.IOException;
 
 public class Day14_CustomerCreation {
-    LoginPage loginPage = new LoginPage();
-    EmployeeDefaultPage employeeDefaultPage = new EmployeeDefaultPage();
-    CreateCustomerPage createCustomerPage = new CreateCustomerPage();
+    LoginPage loginPage;
+    EmployeeDefaultPage employeeDefaultPage;
+    CreateCustomerPage createCustomerPage;
+
     @Test
     public void createCustomerAsEmployee() throws IOException {
         Driver.getDriver().get(ConfigurationReader.getProperty("gmi_login_url"));
+        loginPage = new LoginPage();
+        employeeDefaultPage = new EmployeeDefaultPage();
+        createCustomerPage = new CreateCustomerPage();
 //        calling the loginApplication method to log in
-        loginPage.loginApplication("gino.wintheiser","%B6B*q1!TH");
+        loginPage.loginApplication("gino.wintheiser", "%B6B*q1!TH");
         employeeDefaultPage.myOperationsDropdown.click();
         employeeDefaultPage.manageCustomers.click();
         createCustomerPage.createANewCustomer.click();
@@ -57,5 +62,10 @@ public class Day14_CustomerCreation {
         createCustomerPage.saveButton.click();
         ReusableMethods.getScreenshot("CustomerCreated");
 
+    }
+
+    @AfterMethod
+    public void tearDown() {
+        Driver.closeDriver();
     }
 }
